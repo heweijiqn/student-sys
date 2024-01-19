@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header2"></head>
+<body>
+		
+	<div class="layui-form"  id="layuiadmin-form-order" style="padding: 20px 30px 0 0;">
+	<form class="form-horizontal m-t" id="signupForm" lay-filter="layuiadmin-form-order">
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="majorName">专业名称</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="majorName" name="majorName" lay-verify="required" placeholder="请输入专业名称" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="singleName">简称</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="singleName" name="singleName" lay-verify="required" placeholder="请输入简称" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="majorNum">专业编号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="majorNum" name="majorNum" lay-verify="required" placeholder="请输入专业编号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="introduce">专业介绍</label>
+	      <div class="layui-input-block">
+	        <textarea id="introduce" name="introduce"  placeholder="请输入专业介绍" style=" height: 150px;" autocomplete="off" class="layui-textarea"></textarea>
+	      </div>
+	    </div>
+	    
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="tocollegeId">所属学院</label>
+	      <div class="layui-input-block">
+	        <select id="tocollegeId" name="tocollegeId" lay-filter="tocollegeId" lay-verify="required">
+	        
+            </select>
+	      </div>
+	    </div>
+		<div class="layui-form-item ">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button type="button" lay-submit lay-filter="layuiadmin-app-form-submit" class="layui-btn">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+	</form>
+	</div>
+	
+	<div th:include="include::footer2"></div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script type="text/javascript" src="/js/appjs/platform/major/major.js" th:src="@{/js/appjs/platform/major/major.js}"></script>
+	<script type="text/javascript" src="/js/appjs/platform/major/add.js" th:src="@{/js/appjs/platform/major/add.js}"></script>
+	</script>
+</body>
+</html>

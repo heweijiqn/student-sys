@@ -1,0 +1,26 @@
+<!DOCTYPE html>  
+<html xmlns:th="http://www.thymeleaf.org">  
+<body>  
+    <th:block th:fragment="insertMenu(menus,lv)">  
+        <th:block th:each="menu,menuStat : ${menus}">  
+            <li th:attr="data-name=${menuStat.index},class=${lv==1? 'layui-nav-item':''}" th:if="${lv<=1}">  
+             <a href="javascript:;" th:attr="lay-href=${menu.attributes.type==0? '':menu.attributes.url},lay-tips=${menu.text},lay-direction=${lv}" >
+             	<i class="fa fa fa-bar-chart-o" th:class="${menu.attributes.icon}" th:if="${lv<=1}" style="position: absolute;top: 72%;left: 20px;margin-top: -19px;"></i>
+             	<cite th:text="${menu.text}">菜单名称</cite>
+             </a>
+             <dl class="layui-nav-child" th:if="${not #lists.isEmpty(menu.children)}" >  
+                 <th:block th:unless="${#lists.isEmpty(menu.children)}" th:include="this::insertMenu(${menu.children},${lv+1})"/>
+             </dl>  
+            </li>
+            
+            <dd th:attr="data-name=${menuStat.index}"  th:if="${lv>1}">
+ 				<a  th:attr="lay-href=${menu.attributes.type==0? '':menu.attributes.url},title=${menu.text},lay-direction=${lv}" th:text="${menu.text}">菜单名称</a>
+				<dl class="layui-nav-child" th:if="${not #lists.isEmpty(menu.children)}">
+					<th:block th:unless="${#lists.isEmpty(menu.children)}" th:include="this::insertMenu(${menu.children},${lv+1})"/>  
+				</dl>
+            </dd>
+             
+        </th:block>  
+    </th:block>  
+</body>  
+</html>

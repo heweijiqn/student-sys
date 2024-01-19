@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="deptId" name="deptId" th:value="${sysDept.deptId}"
+								class="hidden">
+							<input id="tarea" name="tarea" th:value="${sysDept.area}"  type="hidden">
+							<div class="form-group">
+								<label class="col-sm-3 control-label ">上级部门：</label>
+								<div class="col-sm-8">
+								<input th:value="${parentDeptName}"
+										class="form-control" type="text" readonly="true" />
+									<input class="form-control hidden" type="text" id="parentId" name="parentId" th:value="${sysDept.parentId}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">部门名称：</label>
+								<div class="col-sm-8">
+									<input id="name" name="name" th:value="${sysDept.name}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">所属校区：</label>
+								<div class="col-sm-8">
+									<select data-placeholder="选择所属校区" name="area" id="area"
+										class="form-control chosen-select" tabindex="2"
+										style="width: 100%">
+										<option value="-1">选择校区</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">负责人：</label>
+								<div class="col-sm-8">
+									<input id="userId" name="userId" class="hidden" th:value="${sysDept.userId}"> 
+									<input id="userName" name="userName" class="form-control" type="text" style="cursor: pointer;background: #fff;" onclick="openUser()" readonly="readonly" placeholder="负责人" th:value="${sysDept.userName}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="note" name="note" class="form-control" th:value="${sysDept.note}"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">排序：</label>
+								<div class="col-sm-8">
+									<input id="orderNum" name="orderNum" th:value="${sysDept.orderNum}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<select id="delFlag" name="delFlag" class="form-control">
+										<option value="1" th:selected="(1 == ${sysDept.delFlag})">正常</option>
+										<option value="0" th:selected="(0 == ${sysDept.delFlag})">禁用</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自yizhi的创新方案 -->
+		<script type="text/javascript" th:inline="javascript">
+		    var s_add_h = 'hidden';
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+		</script>
+		<div shiro:hasPermission="system:sysDept:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="system:sysDept:add">
+			<script type="text/javascript">
+				s_add_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="system:sysDept:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="system:sysDept:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/sysDept/sysDept.js"></script>
+	<script type="text/javascript" src="/js/appjs/system/sysDept/edit.js"></script>
+	</script>
+</body>
+</html>

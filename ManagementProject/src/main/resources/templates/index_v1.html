@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>后台管理平台</title>
+    <meta name="keywords" content="后台管理平台">
+    <meta name="description" content="后台管理平台">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/font-awesome.min.css?v=4.4.0" th:href="@{/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" th:href="@{/css/plugins/toastr/toastr.min.css}"  rel="stylesheet">
+    <link href="/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/plugins/contextmenu/jquery.contextMenu.min.css" th:href="@{/js/plugins/contextmenu/jquery.contextMenu.min.css}"/>
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+  	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" th:href="@{/layui/css/admin.css}" media="all">
+</head>
+<body class="layui-layout-body">
+  
+  <div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+      <div class="layui-header">
+        <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-left">
+          <li class="layui-nav-item layadmin-flexible" lay-unselect>
+            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+              <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+            </a>
+          </li>
+          
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;" layadmin-event="refresh" title="刷新">
+              <i class="layui-icon layui-icon-refresh-3"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="/"> 
+          </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+           
+          <li class="layui-nav-item" lay-unselect>
+            <a lay-href="/oa/notify/selfNotify" layadmin-event="message" lay-text="消息中心">
+              <i class="layui-icon layui-icon-notice"></i>  
+<!--               	如果有新消息，则显示小圆点 -->
+              <span id="n_flag" class="layui-badge-dot" style="display: none;"></span>
+            </a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;" layadmin-event="theme">
+              <i class="layui-icon layui-icon-theme"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;" layadmin-event="note">
+              <i class="layui-icon layui-icon-note"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;" layadmin-event="fullscreen">
+              <i class="layui-icon layui-icon-screen-full"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;">
+              <cite th:text="${name}">贤心</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a @click="personal('basic_info')" href="#">基本资料</a></dd>
+              <dd><a @click="personal('photo_info')" href="#">头像修改</a></dd>
+              <dd><a @click="personal('pwd_info')" href="#">修改密码</a></dd>
+              <hr>
+              <dd onclick="logout();" style="text-align: center;cursor: pointer;"><a>退出</a></dd>
+            </dl>
+          </li>
+          
+          <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+            <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- 侧边菜单 -->
+      <div class="layui-side layui-side-menu">
+        <div class="layui-side-scroll">
+          <div class="layui-logo" lay-href="home/console.html">
+            <span>后台管理</span>
+          </div>
+          
+          <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+            <li data-name="home" class="layui-nav-item layui-this">
+              <a href="javascript:;" lay-href="home/console.html" lay-tips="主页" lay-direction="1">
+                <i class="layui-icon layui-icon-home"></i>
+                <cite>主页</cite>
+              </a>
+            </li>
+            
+            <th:block th:include="menus::insertMenu(${menus},1)"/>
+            
+          </ul>
+        </div>
+      </div>
+
+      <!-- 页面标签 -->
+      <div class="layadmin-pagetabs" id="LAY_app_tabs">
+        <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+        <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+        <div class="layui-icon layadmin-tabs-control layui-icon-down">
+          <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+            <li class="layui-nav-item" lay-unselect>
+              <a href="javascript:;"></a>
+              <dl class="layui-nav-child layui-anim-fadein">
+                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+        <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+          <ul class="layui-tab-title" id="LAY_app_tabsheader">
+            <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+          </ul>
+        </div>
+      </div>
+      
+      
+      <!-- 主体内容 -->
+      <div class="layui-body" id="LAY_app_body">
+        <div class="layadmin-tabsbody-item layui-show">
+          <iframe id="iframe0" src="/wellcome" th:src="@{/chart/graph_echarts.html}" frameborder="0" class="layadmin-iframe" ></iframe>
+        </div>
+      </div>
+      
+      <!-- 辅助元素，一般用于移动设备下遮罩 -->
+      <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+  </div>
+  <script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/plugins/layer2/layer.js?=1" th:src="@{/js/plugins/layer2/layer.js?=1}"></script>
+<script src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+
+<!-- 第三方插件 -->
+<script src="/js/plugins/pace/pace.min.js" th:src="@{/js/plugins/pace/pace.min.js}"></script>
+<!-- vue -->
+<script type="text/javascript" src="/js/vue.min.js" th:src="@{/js/vue.min.js}"></script>
+<script src="/js/appjs/oa/webSocket/sockjs.min.js" th:src="@{/js/appjs/oa/webSocket/sockjs.min.js}"></script>
+<script src="/js/appjs/oa/webSocket/stomp.min.js" th:src="@{/js/appjs/oa/webSocket/stomp.min.js}"></script>
+<!-- Toastr script -->
+<script src="/js/plugins/toastr/toastr.min.js" th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+<script src="/js/jeeplus.js" type="text/javascript" th:src="@{/js/jeeplus.js}"></script>  
+  <script>
+  layui.config({
+    base: '/layui/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use('index',function(){
+	  
+	  var logout=function(){
+		  layer.confirm('确定要退出系统？', {
+				btn : [ '确定', '取消' ],icon:3,title:'退出确认'
+			}, function() {
+				top.location = "/logout";
+			})
+	  }
+	  
+	  window.logout =logout;
+  });
+  
+  
+  </script>
+  <script th:inline="javascript" type="text/javascript">
+    var stompClient = null;
+    $(function () {
+        connect();
+    });
+    
+    function openurl(){
+    	openPage("oa/notify/selfNotify","我的通知",14);
+    	return;
+    }
+
+    function connect() {
+        var socket = new SockJS('/endpointWisely'); //链接SockJS 的endpoint 名称为"/endpointWisely"
+        stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
+        stompClient.connect({}, function (frame) {//链接Web Socket的服务端。
+            //console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/getResponse/[[${userid}]]', function (response) { //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "progressBar": true,
+                    "positionClass": "toast-bottom-right",
+                    "onclick": openurl,
+                    "showDuration": "400",
+                    "hideDuration": "1000",
+                    "timeOut": "20000",
+                    "extendedTimeOut": "20000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.info(JSON.parse(response.body).responseMessage);
+            });
+        });
+    }
+
+    var wrapper = new Vue({
+        el: '#LAY_app',
+        data: {
+            total: '',
+            rows: '',
+        },
+        methods: {
+            notify: function () {
+                $.getJSON('/oa/notify/message', function (r) {
+                    wrapper.total = r.total;
+                    wrapper.rows = r.rows;
+                    if(r.total>0){
+                    	$("#n_flag").show();
+                    }
+                });
+            },
+            personal: function (tab) {
+            	//jp.openDialog('个人设置', '/sys/user/personal#'+tab,'1024px', '720px');
+                layer.open({
+                    type: 2,
+                    title: '个人设置',
+                    maxmin: true,
+                    shadeClose: false,
+                    auto:true,
+                    area: ['1024px', '720px'],
+                    content: '/sys/user/personal#'+tab
+                });
+            }
+        },
+        created: function () {
+            this.notify()
+        }
+    })
+    
+</script>
+  
+</body>
+</html>

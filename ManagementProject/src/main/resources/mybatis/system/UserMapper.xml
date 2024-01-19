@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yizhi.system.dao.UserDao">
+
+	<resultMap id="userlist" type="com.yizhi.system.domain.UserDO">
+        <id column="user_id" property="userId"></id>
+        <collection property="roles" column="{userId=user_id}" select="com.yizhi.system.dao.UserRoleDao.list"/>
+    </resultMap>
+	
+	<sql id="userColumns">
+    	a.user_id,
+    	a.username,
+    	a.name,
+    	a.password,
+    	a.dept_id,
+    	a.email,
+    	a.mobile,
+    	a.status,
+    	a.user_id_create,
+    	a.gmt_create,
+    	a.gmt_modified,
+    	a.sex,
+    	a.birth,
+    	a.pic_id,
+    	a.live_address,
+    	a.hobby,
+    	a.province,
+    	a.city,
+    	a.district,
+    	a.openid,
+    	a.job,
+    	a.receive_msg,
+    	a.user_type,
+    	d.parent_id as "deptDO.parentId",
+    	d.name as "deptDO.name",
+    	d.name as dept_name,
+    	di.name as jobName,
+    	a.headimg,
+    	a.gzh_openid
+    	
+    </sql>
+    <sql id="fuserColumns">
+    	a.user_id,
+    	a.username,
+    	a.name,
+    	a.password,
+    	a.dept_id,
+    	a.email,
+    	a.mobile,
+    	a.status,
+    	a.user_id_create,
+    	a.gmt_create,
+    	a.gmt_modified,
+    	a.sex,
+    	a.birth,
+    	a.pic_id,
+    	a.live_address,
+    	a.hobby,
+    	a.province,
+    	a.city,
+    	a.district,
+    	a.openid,
+    	a.job,
+    	a.receive_msg,
+    	a.headimg,
+    	a.gzh_openid
+    	
+    </sql>
+    <sql id="userJoins">
+		LEFT JOIN sys_dept d ON d.dept_id = a.dept_id 
+		LEFT JOIN sys_dict di ON di.value = a.job and di.type='job'
+		
+    </sql>
+	
+	<select id="findUser" resultType="com.yizhi.system.domain.UserDO">
+		select 
+		<include refid="fuserColumns"/>
+		 from sys_user a 
+		 where a.openid = #{openid}
+	</select>
+	<select id="fget" resultType="com.yizhi.system.domain.UserDO">
+		select 
+		<include refid="fuserColumns"/>
+		 from sys_user a 
+		 where a.user_id = #{value}
+	</select>
+	<select id="get" resultType="com.yizhi.system.domain.UserDO">
+		select 
+		<include refid="userColumns"/>
+		 from sys_user a 
+		 <include refid="userJoins"/>
+		 where a.user_id = #{value}
+	</select>
+
+	<select id="list" resultMap="userlist">
+		select 
+		
+		<include refid="userColumns"/>
+		
+		from sys_user a
+		
+		<include refid="userJoins"/>
+		<if test="roleId != null and roleId != ''">
+			left join sys_user_role ur on ur.user_id=a.user_id 
+		</if>
+        <where>  
+		  		  <if test="userId != null and userId != ''"> and a.user_id = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and a.username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and a.name LIKE CONCAT('%',#{name},'%') </if>
+		  		  <if test="password != null and password != ''"> and a.password = #{password} </if>
+		  		  <if test="deptId != null and deptId != ''"> and a.dept_id = #{deptId} </if>
+		  		  <if test="deptIds != null and deptIds.size() > 0">and a.dept_id in
+	                <foreach collection="deptIds" item="item" index="index" separator="," open="(" close=")">
+	                    #{item}
+	                </foreach>
+	              </if>
+	              <if test="notssp != null and notssp != ''"> and a.dept_id != 63 </if>
+		  		  <if test="email != null and email != ''"> and a.email = #{email} </if>
+		  		  <if test="mobile != null and mobile != ''"> and a.mobile LIKE CONCAT('%',#{mobile},'%') </if>
+		  		  <if test="status != null and status != ''"> and a.status = #{status} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and a.user_id_create = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and a.gmt_create = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and a.gmt_modified = #{gmtModified} </if>
+		  		  <if test="sex != null and sex != ''"> and a.sex = #{sex} </if>
+		  		  <if test="birth != null and birth != ''"> and a.birth = #{birth} </if>
+		  		  <if test="picId != null and picId != ''"> and a.pic_id = #{picId} </if>
+		  		  <if test="liveAddress != null and liveAddress != ''"> and a.live_address = #{liveAddress} </if>
+		  		  <if test="hobby != null and hobby != ''"> and a.hobby = #{hobby} </if>
+		  		  <if test="province != null and province != ''"> and a.province = #{province} </if>
+		  		  <if test="city != null and city != ''"> and a.city = #{city} </if>
+		  		  <if test="district != null and district != ''"> and a.district = #{district} </if>
+		  		  <if test="openid != null and openid != ''"> and a.openid = #{openid} </if>
+		  		  <if test="job != null and job != ''"> and a.job = #{job} </if>
+		  		  <if test="receiveMsg != null and receiveMsg != ''"> and a.receive_msg = #{receiveMsg} </if>
+		  		  <if test="roleId != null and roleId != ''">
+					and ur.role_id = #{roleId}
+				  </if>
+				  <if test="gzhOpenid != null and gzhOpenid != ''"> and a.gzh_openid = #{gzhOpenid} </if>
+				  <if test="isvaild != null and isvaild != ''"> and a.name &lt;&gt; '' </if>
+				  <if test="userType != null and userType != ''"> and a.user_type = #{userType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.user_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_user a
+		<include refid="userJoins"/>
+		<if test="roleId != null and roleId != ''">
+			left join sys_user_role ur on ur.user_id=a.user_id 
+		</if>
+		 <where>  
+		  		  <if test="userId != null and userId != ''"> and a.user_id = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and a.username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and a.name = #{name} </if>
+		  		  <if test="password != null and password != ''"> and a.password = #{password} </if>
+		  		  <if test="deptId != null and deptId != ''"> and a.dept_id = #{deptId} </if>
+		  		  <if test="deptIds != null and deptIds.size() > 0">and a.dept_id in
+	                <foreach collection="deptIds" item="item" index="index" separator="," open="(" close=")">
+	                    #{item}
+	                </foreach>
+	              </if>
+		  		  <if test="email != null and email != ''"> and a.email = #{email} </if>
+		  		  <if test="mobile != null and mobile != ''"> and a.mobile LIKE CONCAT('%',#{mobile},'%') </if>
+		  		  <if test="status != null and status != ''"> and a.status = #{status} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and a.user_id_create = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and a.gmt_create = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and a.gmt_modified = #{gmtModified} </if>
+		  		  <if test="sex != null and sex != ''"> and a.sex = #{sex} </if>
+		  		  <if test="birth != null and birth != ''"> and a.birth = #{birth} </if>
+		  		  <if test="picId != null and picId != ''"> and a.pic_id = #{picId} </if>
+		  		  <if test="liveAddress != null and liveAddress != ''"> and a.live_address = #{liveAddress} </if>
+		  		  <if test="hobby != null and hobby != ''"> and a.hobby = #{hobby} </if>
+		  		  <if test="province != null and province != ''"> and a.province = #{province} </if>
+		  		  <if test="city != null and city != ''"> and a.city = #{city} </if>
+		  		  <if test="district != null and district != ''"> and a.district = #{district} </if>
+		  		  <if test="openid != null and openid != ''"> and a.openid = #{openid} </if>
+		  		  <if test="job != null and job != ''"> and a.job = #{job} </if>
+		  		  <if test="receiveMsg != null and receiveMsg != ''"> and a.receive_msg = #{receiveMsg} </if>
+		  		  <if test="gzhOpenid != null and gzhOpenid != ''"> and a.gzh_openid = #{gzhOpenid} </if>
+		  		  <if test="isvaild != null and isvaild != ''"> and a.name &lt;&gt; '' </if>
+		  		  <if test="roleId != null and roleId != ''">
+					and ur.role_id = #{roleId}
+				  </if>
+				  <if test="userType != null and userType != ''"> and a.user_type = #{userType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.yizhi.system.domain.UserDO" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user
+		(
+			`username`, 
+			`name`, 
+			`password`, 
+			`dept_id`, 
+			`email`, 
+			`mobile`, 
+			`status`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`, 
+			`sex`, 
+			`birth`, 
+			`pic_id`, 
+			`live_address`, 
+			`hobby`, 
+			`province`, 
+			`city`, 
+			`district`,
+			`openid`,
+			`job`,
+			`headimg`,
+			`receive_msg`,
+			`user_type`
+		)
+		values
+		(
+			#{username}, 
+			#{name}, 
+			#{password}, 
+			#{deptId}, 
+			#{email}, 
+			#{mobile}, 
+			#{status}, 
+			#{userIdCreate}, 
+			#{gmtCreate}, 
+			#{gmtModified}, 
+			#{sex}, 
+			#{birth}, 
+			#{picId}, 
+			#{liveAddress}, 
+			#{hobby}, 
+			#{province}, 
+			#{city}, 
+			#{district},
+			#{openid},
+			#{job},
+			#{headimg},
+			#{receiveMsg},
+			#{userType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.yizhi.system.domain.UserDO">
+		update sys_user 
+		<set>
+			<if test="newUserId != null">`user_id` = #{newUserId}, </if>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="userIdCreate != null">`user_id_create` = #{userIdCreate}, </if>
+			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
+			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="birth != null">`birth` = #{birth}, </if>
+			<if test="picId != null">`pic_id` = #{picId}, </if>
+			<if test="liveAddress != null">`live_address` = #{liveAddress}, </if>
+			<if test="hobby != null">`hobby` = #{hobby}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="openid != null">`openid` = #{openid},</if>
+			<if test="district != null">`district` = #{district},</if>
+			<if test="job != null">`job` = #{job},</if>
+			<if test="headimg != null">`headimg` = #{headimg},</if>
+			<if test="receiveMsg != null">`receive_msg` = #{receiveMsg},</if>
+			<if test="gzhOpenid != null">`gzh_openid` = #{gzhOpenid},</if>
+			<if test="userType != null">`user_type` = #{userType},</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_user where user_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_user where user_id in 
+		<foreach item="userId" collection="array" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+	<select id="listAllDept" resultType="long">
+				select DISTINCT dept_id from sys_user
+	</select>
+</mapper>

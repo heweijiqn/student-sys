@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina ios ios-10 ios-10-3 ios-gt-9 ios-gt-8 ios-gt-7 ios-gt-6">
+<head lang="en">
+    <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/wxbind/css/weui.css">
+	<link rel="stylesheet" type="text/css" href="/wxbind/css/weui.min.css">
+	<link rel="stylesheet" type="text/css" href="/wxbind/css/jquery-weui.min.css">
+</head>
+
+
+
+<body ontouchstart="">
+
+    <div class="weui-msg" style="padding-top: 50px;">
+      <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+      <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">您的帐号已被锁定！</h2>
+         <p class="weui-msg__desc">相关信息请联系管理员</p>
+      </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:;" onclick="closeThis();" class="weui-btn weui-btn_primary">确定</a>
+        </p>
+      </div>
+      <div class="weui-msg__extra-area">
+      	<!-- 
+        <div class="weui-footer">
+          <p class="weui-footer__links">
+            <a href="javascript:void(0);" class="weui-footer__link">底部链接文本</a>
+          </p>
+          <p class="weui-footer__text">Copyright © 2008-2016 weui.io</p>
+        </div> -->
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+	function closeThis(){
+		WeixinJSBridge.call('closeWindow');
+	}
+	</script>
+    <script src="/wxbind/js/jquery-2.1.4.js"></script>
+    <script src="/wxbind/js/fastclick.js">
+    </script> 
+    <script>
+    $(function() {     FastClick.attach(document.body);   }); 
+    </script>  
+    <script src="/wxbind/js/jquery-weui.min.js"></script>
+  
+
+</body>
+</html>

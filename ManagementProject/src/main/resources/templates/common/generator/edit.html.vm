@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header2"></head>
+<body>
+	
+	<div class="layui-form"  id="layuiadmin-form-order" style="padding: 20px 30px 0 0;">
+	<form class="form-horizontal m-t" id="signupForm" lay-filter="layuiadmin-form-order">
+	<input id="${pk.attrname}" name="${pk.attrname}" th:value="${${classname}.${pk.attrname}}"  type="hidden">
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName)
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="${column.attrname}">${column.comments}</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="${column.attrname}" name="${column.attrname}" th:value="${${classname}.${column.attrname}}" lay-verify="required" placeholder="请输入${column.comments}" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+#end
+#end
+		<div class="layui-form-item ">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button type="button" lay-submit lay-filter="layuiadmin-app-form-submit" class="layui-btn">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+	</form>
+	</div>
+	
+	<div th:include="include::footer2"></div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/${classname}.js" th:src="@{/js/appjs/${pathName}/${classname}/${classname}.js}"></script>
+	<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/edit.js" th:src="@{/js/appjs/${pathName}/${classname}/edit.js}"></script>
+</body>
+</html>

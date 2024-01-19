@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header2"></head>
+<body>
+	
+	<div class="layui-form"  id="layuiadmin-form-order" style="padding: 20px 30px 0 0;">
+	<form class="form-horizontal m-t" id="signupForm" lay-filter="layuiadmin-form-order">
+	<input id="id" name="id" th:value="${studentInfo.id}"  type="hidden">
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="studentId">学号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="studentId" name="studentId" th:value="${studentInfo.studentId}" lay-verify="required" placeholder="请输入学号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="examId">考生号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="examId" name="examId" th:value="${studentInfo.examId}" lay-verify="required" placeholder="请输入考生号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="classId">所属班级</label>
+	      <div class="layui-input-block">
+	        <input type="hidden" id="v_classId" name="v_classId" th:value="${studentInfo.classId}" lay-verify="required" placeholder="请输入所属班级" autocomplete="off" class="layui-input">
+	        <select id="classId" name="classId" lay-filter="classId" lay-verify="required">
+	        
+            </select>
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="studentName">学生姓名</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="studentName" name="studentName" th:value="${studentInfo.studentName}" lay-verify="required" placeholder="请输入学生姓名" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="certify">身份证号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="certify" name="certify" th:value="${studentInfo.certify}" lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="mailAddress">家庭住址</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="mailAddress" name="mailAddress" th:value="${studentInfo.mailAddress}" lay-verify="required" placeholder="请输入家庭住址" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="foreignLanaguage">外语语种</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="foreignLanaguage" name="foreignLanaguage" th:value="${studentInfo.foreignLanaguage}" lay-verify="required" placeholder="请输入外语语种" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="studentSex">性别</label>
+	      <div class="layui-input-block">
+	        <select data-placeholder="请选择" name="studentSex" id="studentSex" class="form-control chosen-select" tabindex="2">
+				<option value="1" th:selected="(1 == ${studentInfo.studentSex})">男</option>
+				<option value="2" th:selected="(2 == ${studentInfo.studentSex})">女</option>
+			</select>
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="nation">民族</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="nation" name="nation" th:value="${studentInfo.nation}" lay-verify="required" placeholder="请输入民族" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="political">政治面貌</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="political" name="political" th:value="${studentInfo.political}" lay-verify="required" placeholder="请输入政治面貌" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="cardId">一卡通卡号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="cardId" name="cardId" th:value="${studentInfo.cardId}" lay-verify="required" placeholder="请输入一卡通卡号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="telephone">手机号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="telephone" name="telephone" th:value="${studentInfo.telephone}" lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="subjectType">科类</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="subjectType" name="subjectType" th:value="${studentInfo.subjectType}" lay-verify="required" placeholder="请输入科类" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="tocollegeId">所属学院</label>
+	      <div class="layui-input-block">
+	        <input type="hidden" id="v_tocollegeId" name="v_tocollege" th:value="${studentInfo.tocollege}" lay-verify="required" placeholder="请输入所属学院" autocomplete="off" class="layui-input">
+	        <select id="tocollegeId" name="tocollege" lay-filter="tocollegeId" lay-verify="required">
+	        
+            </select>
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="tomajor">所属专业</label>
+	      <div class="layui-input-block">
+	        <input type="hidden" id="v_tomajorId" name="v_tomajor" th:value="${studentInfo.tomajor}" lay-verify="required" placeholder="请输入所属专业" autocomplete="off" class="layui-input">
+	        <select id="tomajorId" name="tomajor" lay-filter="tomajorId" lay-verify="required">
+	        
+            </select>
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="birthplace">生源地</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="birthplace" name="birthplace" th:value="${studentInfo.birthplace}" lay-verify="required" placeholder="请输入生源地" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="grade">隶属层次</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="grade" name="grade" th:value="${studentInfo.grade}" lay-verify="required" placeholder="请输入隶属层次" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="isstate">在校状态</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="isstate" name="isstate" th:value="${studentInfo.isstate}" lay-verify="required" placeholder="请输入在校状态" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="birthday">出生日期</label>
+	      <div class="layui-input-block">
+<!-- 	      	<input type="hidden" id="v_tomajorId" name="v_tomajor" th:value="${studentInfo.tomajor}" lay-verify="required" placeholder="请输入所属专业" autocomplete="off" class="layui-input"> -->
+	        <input type="text" id="birthday" name="birthday" th:value="${#dates.format(studentInfo.birthday, 'yyyy-MM-dd')}" lay-verify="required" placeholder="请输入出生日期" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="note">备注</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="note" name="note" th:value="${studentInfo.note}" lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    
+		<div class="layui-form-item ">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button type="button" lay-submit lay-filter="layuiadmin-app-form-submit" class="layui-btn">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+	</form>
+	</div>
+	
+	<div th:include="include::footer2"></div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script type="text/javascript" src="/js/appjs/platform/studentInfo/studentInfo.js" th:src="@{/js/appjs/platform/studentInfo/studentInfo.js}"></script>
+	<script type="text/javascript" src="/js/appjs/platform/studentInfo/edit.js" th:src="@{/js/appjs/platform/studentInfo/edit.js}"></script>
+</body>
+</html>

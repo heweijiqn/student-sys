@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header2"></head>
+<body>
+	
+	<div class="layui-form"  id="layuiadmin-form-order" style="padding: 20px 30px 0 0;">
+	<form class="form-horizontal m-t" id="signupForm" lay-filter="layuiadmin-form-order">
+	<input id="id" name="id" th:value="${college.id}"  type="hidden">
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="collegeName">学院名称</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="collegeName" name="collegeName" th:value="${college.collegeName}" lay-verify="required" placeholder="请输入学院名称" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="singleName">简称</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="singleName" name="singleName" th:value="${college.singleName}" lay-verify="required" placeholder="请输入简称" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="collegeNum">学院编号</label>
+	      <div class="layui-input-block">
+	        <input type="text" id="collegeNum" name="collegeNum" th:value="${college.collegeNum}" lay-verify="required" placeholder="请输入学院编号" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-form-item">
+	      <label class="layui-form-label" for="introduce">学院介绍</label>
+	      <div class="layui-input-block">
+	        <textarea id="introduce" name="introduce" lay-verify="required" th:text="${college.introduce}" placeholder="请输入学院介绍" style=" height: 150px;" autocomplete="off" class="layui-textarea"></textarea>
+	      </div>
+	    </div>
+	    
+		<div class="layui-form-item ">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button type="button" lay-submit lay-filter="layuiadmin-app-form-submit" class="layui-btn">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+	</form>
+	</div>
+	
+	<div th:include="include::footer2"></div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script type="text/javascript" src="/js/appjs/platform/college/college.js" th:src="@{/js/appjs/platform/college/college.js}"></script>
+	<script type="text/javascript" src="/js/appjs/platform/college/edit.js" th:src="@{/js/appjs/platform/college/edit.js}"></script>
+</body>
+</html>

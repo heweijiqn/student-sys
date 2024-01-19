@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div id="exampleToolbar" role="group">
+						<button shiro:hasPermission="sys:role:add" type="button"
+							class="btn btn-primary" onclick="add()">
+							<i class="fa fa-plus" aria-hidden="true"></i>添加
+						</button>
+						<button shiro:hasPermission="sys:role:batchRemove" type="button"
+							class="btn btn-danger" onclick="batchRemove()">
+							<i class="fa fa-trash" aria-hidden="true"></i>删除
+						</button>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+<!-- 				<div class="form-group"> 
+						<span>角色对应说明：</span>
+						<table class="layui-table" lay-size="sm" style="width:100%;margin: 10px auto;">
+							<thead>
+								<tr>
+									<th>甲方：</th>
+									<th>乙方：</th>
+									<th style="font-weight: bold;">对应平台角色设置</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>校处管理员</td>
+									<td></td>
+									<td>校处管理员</td>
+								</tr>
+								<tr>
+									<td>分管处长</td>
+									<td></td>
+									<td>处级管理员</td>
+								</tr>
+								<tr>
+									<td>科级管理员</td>
+									<td>经理主管</td>
+									<td>科级管理员</td>
+								</tr>
+								<tr>
+									<td>部长级</td>
+									<td>部长</td>
+									<td>一级服务人员</td>
+								</tr>
+								<tr>
+									<td>工人</td>
+									<td>工人</td>
+									<td>服务人员</td>
+								</tr>
+								<tr style="background-color: #f2f2f2;">
+									<td>丙方：</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>网格员</td>
+									<td></td>
+									<td>网格员</td>
+								</tr>
+								<tr>
+									<td>随手拍用户</td>
+									<td></td>
+									<td>一般人员</td>
+								</tr>
+							</tbody>
+						</table>-->
+<!-- 						</div> -->
+			</div>
+		</div>
+		<!--shiro控制bootstraptable行内按钮看见性 来自yizhi的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:role:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:role:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/sys/role/role.js">
+		
+	</script>
+</body>
+
+</html>

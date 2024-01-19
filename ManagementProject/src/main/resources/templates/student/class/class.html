@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header2"></head>
+<body>
+	<div class="layui-fluid">
+	    <div class="layui-card">
+	      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+	        <div class="layui-form-item">
+		        <div class="layui-inline">
+		            <label class="layui-form-label">学院</label>
+		            <div class="layui-input-inline">
+		              <select name="tocollegeId" id="s_tocollegeId">
+		                <option value="">请选择学院</option>
+		              </select>
+		            </div>
+		         </div>
+		         <div class="layui-inline">
+		            <label class="layui-form-label">专业</label>
+		            <div class="layui-input-inline">
+		              <select name="tomajorId" id="s_tomajorId">
+		                <option value="">请选择专业</option>
+		              </select>
+		            </div>
+		         </div>
+	          <div class="layui-inline">
+	            <label class="layui-form-label ">班级名称</label>
+	            <div class="layui-input-inline">
+	              <input type="text" name="className" placeholder="请输入" autocomplete="off" class="layui-input">
+	            </div>
+	          </div>
+	          
+	          <div class="layui-inline">
+	            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>
+	          </div>
+	        </div>
+	      </div>
+	
+	      <div class="layui-card-body">
+	        <div style="padding-bottom: 10px;">
+	          <button class="layui-btn layuiadmin-btn-list layui-btn-sm layui-btn-danger" data-type="batchdel" shiro:hasPermission="student:class:batchRemove">批量删除</button>
+	          <button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="add" shiro:hasPermission="student:class:add" >添加</button>
+	        </div>
+	        <table id="LAY-app-content-list" lay-filter="LAY-app-content-list"></table> 
+	        <script type="text/html" id="indexTpl">
+    			{{d.LAY_TABLE_INDEX+1}}
+			</script>
+	        <script type="text/html" id="table-content-list">
+          		<a class="layui-btn layui-btn-normal layui-btn-xs {{s_edit_h}}" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+          		<a class="layui-btn layui-btn-danger layui-btn-xs {{s_remove_h}}" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+        	</script>
+	      </div>
+	    </div>
+	 </div>
+	
+	
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'layui-hide';
+				var s_remove_h = 'layui-hide';
+				var s_add_h = 'layui-hide';
+			</script>
+		</div>
+		<div shiro:hasPermission="student:class:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="student:class:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="student:class:resetPwd">
+			<script type="text/javascript">
+				var s_add_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer2"></div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script type="text/javascript" src="/js/appjs/platform/class/class.js" th:src="@{/js/appjs/platform/class/class.js}"></script>
+</body>
+</html>

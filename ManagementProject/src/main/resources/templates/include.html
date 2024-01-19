@@ -1,0 +1,81 @@
+<head th:fragment="header">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="css/bootstrap.min.css?v=3.3.6" th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet"/>
+	<link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet"/>
+	<link href="/css/plugins/bootstrap-table/bootstrap-table.min.css" th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+	<link rel="stylesheet" href="/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.css" th:href="@{/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.css}" />
+	<link href="/css/plugins/jsTree/style.min.css" th:href="@{/css/plugins/jsTree/style.min.css}" rel="stylesheet"/>
+	<link href="/css/plugins/jqTreeGrid/jquery.treegrid.css" th:href="@{/css/plugins/jqTreeGrid/jquery.treegrid.css}"  rel="stylesheet"/>
+	<!--summernote css -->
+	<link href="/css/plugins/summernote/summernote-0.8.8.css" th:href="@{/css/plugins/summernote/summernote-0.8.8.css}" rel="stylesheet"/>
+	<link href="css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet"/>
+	<link href="/css/plugins/chosen/chosen.css" th:href="@{/css/plugins/chosen/chosen.css}" rel="stylesheet"/>
+	<link href="/css/style.css?v=4.1.0" th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="/js/plugins/daterangepicker/daterangepicker-bs3.css" th:href="@{/js/plugins/daterangepicker/daterangepicker-bs3.css}"/>
+<!-- 	<link rel="stylesheet" href="/js/plugins/layer/laydate/skins/default/laydate.css" th:href="@{/js/plugins/layer/laydate/skins/default/laydate.css}"/> -->
+	<link rel="stylesheet" href="/layui/css/layui.css?v=2.4.3" th:href="@{/layui/css/layui.css?v=2.4.3}" />
+	<link rel="stylesheet" href="/layui/css/admin.css" th:href="@{/layui/css/admin.css}" media="all">
+</head>
+<head th:fragment="header2">
+	<meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	
+	<link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet"/>
+	<link href="/css/style.css?v=4.1.0" th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet"/>
+	<link rel="stylesheet" href="/layui/css/layui.css?v=2.4.3" th:href="@{/layui/css/layui.css?v=2.4.3}" />
+	<link rel="stylesheet" href="/layui/css/admin.css" th:href="@{/layui/css/admin.css}" media="all">
+</head>
+<div th:fragment="footer">
+	<script th:inline="javascript"> var ctx = /*[[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]*/; </script>
+	<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+	<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-export.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-export.js}"></script> 
+	<script src="/js/plugins/bootstrap-table/tableExport.js" th:src="@{/js/plugins/bootstrap-table/tableExport.js}"></script> 
+	<script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+	<script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+	<script src="/js/plugins/validate/jquery.validate.extend.js" th:src="@{/js/plugins/validate/jquery.validate.extend.js}"></script>
+	<script src="/js/plugins/jsTree/jstree.min.js" th:src="@{/js/plugins/jsTree/jstree.min.js}"></script>
+	<script src="/js/plugins/jqTreeGrid/jquery.treegrid.min.js" th:src="@{/js/plugins/jqTreeGrid/jquery.treegrid.min.js}"></script>
+	<script src="/js/plugins/jqTreeGrid/jquery.treegrid.extension.js" th:src="@{/js/plugins/jqTreeGrid/jquery.treegrid.extension.js}"></script>
+	<script src="/js/plugins/jqTreeGrid/jquery.treegrid.ajax.js" th:src="@{/js/plugins/jqTreeGrid/jquery.treegrid.ajax.js}"></script>
+	<script src="/js/plugins/jqTreeGrid/jquery.treegrid.bootstrap3.js" th:src="@{/js/plugins/jqTreeGrid/jquery.treegrid.bootstrap3.js}"></script>
+	<script src="/js/plugins/chosen/chosen.jquery.js" th:src="@{/js/plugins/chosen/chosen.jquery.js}"></script>
+	<script src="/js/plugins/layer2/layer.js" th:src="@{/js/plugins/layer2/layer.js}"></script>
+	<script type="text/javascript" src="/layui/layui.js?v=2.4.3" th:src="@{/layui/layui.all.js?v=2.4.3}"></script>
+	<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+	<!--summernote-->
+	<script src="/js/plugins/summernote/summernote.js" th:src="@{/js/plugins/summernote/summernote.js}"></script>
+	<script src="/js/plugins/summernote/summernote-zh-CN.min.js" th:src="@{/js/plugins/summernote/summernote-zh-CN.min.js}"></script>
+	
+	<script src="/js/jeeplus.js" type="text/javascript" th:src="@{/js/jeeplus.js}"></script>
+	<script type="text/javascript" src="/js/plugins/daterangepicker/moment.js" th:src="@{/js/plugins/daterangepicker/moment.js}"></script>
+	<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js" th:src="@{/js/plugins/daterangepicker/daterangepicker.js}"></script>
+<!-- 	<script type="text/javascript" src="/js/plugins/layer/laydate/laydate.js" th:src="@{/js/plugins/layer/laydate/laydate.js}"></script> -->
+	<!-- 第三方插件 -->
+	<script src="/js/plugins/pace/pace.min.js" data-pace-options='{ "ajax": false }' th:src="@{/js/plugins/pace/pace.js}"></script>
+</div>
+<div th:fragment="footer2">
+	<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+	<script type="text/javascript" src="/layui/layui.js?v=2.4.3" th:src="@{/layui/layui.js?v=2.4.3}"></script>
+	<script src="/js/plugins/pace/pace.min.js" data-pace-options='{ "ajax": false }' th:src="@{/js/plugins/pace/pace.js}"></script>
+	<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-fixed-columns-pro.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+	<script src="/js/plugins/bootstrap-table/bootstrap-table-export.js" th:src="@{/js/plugins/bootstrap-table/bootstrap-table-export.js}"></script> 
+	<script src="/js/plugins/bootstrap-table/tableExport.js" th:src="@{/js/plugins/bootstrap-table/tableExport.js}"></script> 
+	<script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script src="/js/plugins/jsTree/jstree.min.js" th:src="@{/js/plugins/jsTree/jstree.min.js}"></script>
+</div>
+
+

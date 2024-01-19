@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit" />
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+    <title>后台管理平台</title>
+    <meta name="keywords" content="后台管理平台">
+    <meta name="description" content="后台管理平台">
+    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link href="/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="/css/login.css" th:href="@{/css/login.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <style type="text/css">
+		html, body {
+		    background: #000;
+		    margin: 0;
+		    padding: 0;
+		}
+		a {
+			color:#0078ff;
+		}
+		.layadmin-user-login-box{
+			padding: 30px;
+		}
+	</style>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body >
+<div class="signinpanel" style="margin: 8% auto;left: 0;right: 0;position: absolute;">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                    <h1 style="color:#fff;">后台管理平台</h1>
+                </div>
+                <div class="m-b"></div>
+                
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <form id="signupForm">
+                <h3 class="text-center">用户登录</h3>
+                <p class="m-t-md text-center">欢迎登录后台管理平台</p>
+                <input type="text" name="username" class="form-control uname" value="" placeholder="用户名"/>
+                <input type="password" name="password"
+                       class="form-control pword " value="" placeholder="密码"/>
+                <div>
+                	<input type="text" name="code" placeholder="验证码" class="form-control " style="width:65%;display: inline;margin-top: 15px;color: #333;background: #fff url() no-repeat 95% center;"/><img id="captcha" alt="验证码" src="/defaultKaptcha" onclick="refreshCode(this)" title="点击更换" height="34" style="margin-left: 4px;margin-bottom: 3px;width: 33%;">
+                </div>
+                      
+                <button class="btn btn-login btn-block">登录</button>
+
+            </form>
+        </div>
+    </div>
+   
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+<script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    	refreshCode(document.getElementById("captcha"));
+        //console.log(ctx);
+        validateRule();
+	
+    });
+
+    $.validator.setDefaults({
+        submitHandler: function () {
+            login();
+        }
+    });
+
+    function refreshCode(obj){
+        obj.src = "/defaultKaptcha?t=" + new Date().getTime();
+    }
+    
+    function login() {
+        $.ajax({
+            type: "POST",
+            url: ctx+"login",
+            data: $('#signupForm').serialize(),
+            success: function (r) {
+                if (r.code == 0) {
+                    parent.location.href = '/index';
+                } else {
+                	refreshCode(document.getElementById("captcha"));
+                    layer.msg(r.msg);
+                }
+            }
+        });
+    }
+
+    function validateRule() {
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        $("#signupForm").validate({
+        	errorPlacement: function(error, element) {
+    	        if (element.attr("name")=='code'){ 
+    	        	error.insertAfter(element.parent("div"));
+    	        }else {
+    	            error.insertAfter(element);
+    	        }
+    	    },
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+                ,
+                code: {
+                    required: true
+                }
+            },
+            messages: {
+                username: {
+                    required: icon + "请输入您的用户名",
+                },
+                password: {
+                    required: icon + "请输入您的密码",
+                },
+                code: {
+                    required: icon + "请输入验证码",
+                }
+            }
+        })
+    }
+</script>
+
+<canvas width="1920" height="972"></canvas>
+<script>
+$(function(){
+  var canvas = document.querySelector('canvas'),
+      ctx = canvas.getContext('2d')
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.lineWidth = .3;
+  ctx.strokeStyle = (new Color(150)).style;
+
+  var mousePosition = {
+    x: 30 * canvas.width / 100,
+    y: 30 * canvas.height / 100
+  };
+
+  var dots = {
+    nb: 750,
+    distance: 50,
+    d_radius: 100,
+    array: []
+  };
+
+  function colorValue(min) {
+    return Math.floor(Math.random() * 255 + min);
+  }
+  
+  function createColorStyle(r,g,b) {
+    return 'rgba(' + r + ',' + g + ',' + b + ', 0.8)';
+  }
+  
+  function mixComponents(comp1, weight1, comp2, weight2) {
+    return (comp1 * weight1 + comp2 * weight2) / (weight1 + weight2);
+  }
+  
+  function averageColorStyles(dot1, dot2) {
+    var color1 = dot1.color,
+        color2 = dot2.color;
+    
+    var r = mixComponents(color1.r, dot1.radius, color2.r, dot2.radius),
+        g = mixComponents(color1.g, dot1.radius, color2.g, dot2.radius),
+        b = mixComponents(color1.b, dot1.radius, color2.b, dot2.radius);
+    return createColorStyle(Math.floor(r), Math.floor(g), Math.floor(b));
+  }
+  
+  function Color(min) {
+    min = min || 0;
+    this.r = colorValue(min);
+    this.g = colorValue(min);
+    this.b = colorValue(min);
+    this.style = createColorStyle(this.r, this.g, this.b);
+  }
+
+  function Dot(){
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+
+    this.vx = -.5 + Math.random();
+    this.vy = -.5 + Math.random();
+
+    this.radius = Math.random() * 2;
+
+    this.color = new Color();
+    console.log(this);
+  }
+
+  Dot.prototype = {
+    draw: function(){
+      ctx.beginPath();
+      ctx.fillStyle = this.color.style;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+  };
+
+  function createDots(){
+    for(i = 0; i < dots.nb; i++){
+      dots.array.push(new Dot());
+    }
+  }
+
+  function moveDots() {
+    for(i = 0; i < dots.nb; i++){
+
+      var dot = dots.array[i];
+
+      if(dot.y < 0 || dot.y > canvas.height){
+        dot.vx = dot.vx;
+        dot.vy = - dot.vy;
+      }
+      else if(dot.x < 0 || dot.x > canvas.width){
+        dot.vx = - dot.vx;
+        dot.vy = dot.vy;
+      }
+      dot.x += dot.vx;
+      dot.y += dot.vy;
+    }
+  }
+
+  function connectDots() {
+    for(i = 0; i < dots.nb; i++){
+      for(j = 0; j < dots.nb; j++){
+        i_dot = dots.array[i];
+        j_dot = dots.array[j];
+
+        if((i_dot.x - j_dot.x) < dots.distance && (i_dot.y - j_dot.y) < dots.distance && (i_dot.x - j_dot.x) > - dots.distance && (i_dot.y - j_dot.y) > - dots.distance){
+          if((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > - dots.d_radius && (i_dot.y - mousePosition.y) > - dots.d_radius){
+            ctx.beginPath();
+            ctx.strokeStyle = averageColorStyles(i_dot, j_dot);
+            ctx.moveTo(i_dot.x, i_dot.y);
+            ctx.lineTo(j_dot.x, j_dot.y);
+            ctx.stroke();
+            ctx.closePath();
+          }
+        }
+      }
+    }
+  }
+
+  function drawDots() {
+    for(i = 0; i < dots.nb; i++){
+      var dot = dots.array[i];
+      dot.draw();
+    }
+  }
+
+  function animateDots() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    moveDots();
+    connectDots();
+    drawDots();
+
+    requestAnimationFrame(animateDots);	
+  }
+
+  $('canvas').on('mousemove', function(e){
+    mousePosition.x = e.pageX;
+    mousePosition.y = e.pageY;
+  });
+
+  $('canvas').on('mouseleave', function(e){
+    mousePosition.x = canvas.width / 2;
+    mousePosition.y = canvas.height / 2;
+  });
+
+  createDots();
+  requestAnimationFrame(animateDots);	
+});
+</script>
+
+ 
+</body>
+
+
+</html>

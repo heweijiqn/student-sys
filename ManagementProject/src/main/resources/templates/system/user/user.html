@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row"> 
+		
+			<div class="col-sm-2">
+				<div class="ibox ibox-body" >
+					<div class="ibox-title">
+						<h5>选择部门</h5><h5 style="float: right;"><a href="javascript:;" style="color:#337ab7;" onclick="getall()" >所有</a></h5>
+					</div>
+					<div class="ibox-content" style="height: 550px;overflow: auto;">
+						<div id="jstree"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-10">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-left">
+								<button shiro:hasPermission="sys:user:add" type="button"
+									class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
+								</button>
+								<button shiro:hasPermission="sys:user:batchRemove" type="button"
+									class="btn  btn-danger" onclick="batchRemove()">
+									<i class="fa fa-trash hidden" aria-hidden="true"></i>删除
+								</button>
+							</div>
+							<div class="columns pull-right">
+								<button class="btn btn-success" onclick="reLoad(1)">查询</button>
+							</div>
+							<div class="columns pull-right col-md-2 " style="padding-left: 0px;">
+								<input id="mobile" type="text" class="form-control"
+									placeholder="手机号">
+							</div>
+							<div class="columns pull-right col-md-2 " style="padding-left: 0px;">
+								<input id="searchName" type="text" class="form-control"
+									placeholder="姓名">
+							</div>
+							<div class="columns pull-right col-md-2 ">
+								<select data-placeholder="所有角色" name="roleId" id="roleId"
+											class="form-control chosen-select" tabindex="2" style="width: 100%">
+
+											
+							</select>
+							</div>
+							
+						</div>
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<div th:include="include :: footer2"></div>
+	<script type="text/javascript" src="/js/appjs/sys/user/user.js"></script>
+	<script>
+		layui.config({
+			base: ctx +'layui/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			 }).use(['index','admin'], function(){
+		var admin = layui.admin;
+		admin.selectRender({
+			elem: '#roleId',
+			url: '/sys/role/list',
+			idKey: 'roleId',
+			nameKey: 'roleName',
+			placeholder: '选择角色',
+			transdata: function(res) {
+				return res
+			}
+		})
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+server:
+    session-timeout: 3600
+    port: 8080
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles: 
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
+  devtools:
+    restart:
+      enabled: false
+  activiti:
+    check-process-definitions: false
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*Mapper.xml
+  typeAliasesPackage: com.yizhi.**.domain
+#JWT配置
+##认证名称
+jwt:
+ header: authorization
+##加密向量
+ secret: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+##token过期时间一天(秒) 2小时7200
+ expiration: 7200
+##refresh_token过期时间一天(秒)7天
+ refresh_expiration: 604800
+##Tokenu前缀
+ token:
+   head: eyJhbG
+wx:
+  miniapp:
+    configs:
+        - appid: #微信小程序的appid
+          secret: #微信小程序的Secret
+          token: #微信小程序消息服务器配置的token
+          aesKey: #微信小程序消息服务器配置的EncodingAESKey
+          msgDataFormat: JSON

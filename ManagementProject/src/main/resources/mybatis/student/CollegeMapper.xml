@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yizhi.student.dao.CollegeDao">
+	
+	
+	<sql id="CollegeColumns">
+		  a.id,	  
+		  a.college_name,	  
+		  a.single_name,	  
+		  a.introduce,	  
+		  a.college_num
+		</sql>
+	
+	
+	<sql id="CollegeJoins">
+	
+    </sql>
+	
+	<select id="get" resultType="com.yizhi.student.domain.CollegeDO">
+		select 
+			<include refid="CollegeColumns"/>
+		 from sys_college a
+		 	<include refid="CollegeJoins"/>
+		 where a.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.yizhi.student.domain.CollegeDO">
+		select 
+			<include refid="CollegeColumns"/>
+		 from sys_college a
+		 	<include refid="CollegeJoins"/>
+        <where>  
+		  		  <if test="id != null and id != ''"> and a.id = #{id} </if>
+		  		  <if test="collegeName != null and collegeName != ''"> and a.college_name LIKE CONCAT('%',#{collegeName},'%') </if>
+		  		  <if test="singleName != null and singleName != ''"> and a.single_name = #{singleName} </if>
+		  		  <if test="introduce != null and introduce != ''"> and a.introduce = #{introduce} </if>
+		  		  <if test="collegeNum != null and collegeNum != ''"> and a.college_num = #{collegeNum} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_college a
+		 <include refid="CollegeJoins"/>
+		 <where>  
+		  		  <if test="id != null and id != ''"> and a.id = #{id} </if>
+		  		  <if test="collegeName != null and collegeName != ''">and a.college_name LIKE CONCAT('%',#{collegeName},'%') </if>
+		  		  <if test="singleName != null and singleName != ''"> and a.single_name = #{singleName} </if>
+		  		  <if test="introduce != null and introduce != ''"> and a.introduce = #{introduce} </if>
+		  		  <if test="collegeNum != null and collegeNum != ''"> and a.college_num = #{collegeNum} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.yizhi.student.domain.CollegeDO" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_college
+		(
+			`college_name`, 
+			`single_name`, 
+			`introduce`, 
+			`college_num`
+		)
+		values
+		(
+			#{collegeName}, 
+			#{singleName}, 
+			#{introduce}, 
+			#{collegeNum}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.yizhi.student.domain.CollegeDO">
+		update sys_college 
+		<set>
+			<if test="collegeName != null">`college_name` = #{collegeName}, </if>
+			<if test="singleName != null">`single_name` = #{singleName}, </if>
+			<if test="introduce != null">`introduce` = #{introduce}, </if>
+			<if test="collegeNum != null">`college_num` = #{collegeNum}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_college where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_college where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

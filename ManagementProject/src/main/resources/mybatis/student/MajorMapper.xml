@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yizhi.student.dao.MajorDao">
+	
+	
+	<sql id="MajorColumns">
+		  a.id,	  
+		  a.major_name,	  
+		  a.single_name,	  
+		  a.introduce,	  
+		  a.major_num,	  
+		  a.tocollege_id,
+		  sc.college_name
+		</sql>
+	
+	
+	<sql id="MajorJoins">
+		left join sys_college sc on sc.id=a.tocollege_id
+    </sql>
+	
+	<select id="get" resultType="com.yizhi.student.domain.MajorDO">
+		select 
+			<include refid="MajorColumns"/>
+		 from sys_major a
+		 	<include refid="MajorJoins"/>
+		 where a.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.yizhi.student.domain.MajorDO">
+		select 
+			<include refid="MajorColumns"/>
+		 from sys_major a
+		 	<include refid="MajorJoins"/>
+        <where>  
+		  		  <if test="id != null and id != ''"> and a.id = #{id} </if>
+		  		  <if test="majorName != null and majorName != ''"> and a.major_name LIKE CONCAT('%',#{majorName},'%') </if>
+		  		  <if test="singleName != null and singleName != ''"> and a.single_name = #{singleName} </if>
+		  		  <if test="introduce != null and introduce != ''"> and a.introduce = #{introduce} </if>
+		  		  <if test="majorNum != null and majorNum != ''"> and a.major_num = #{majorNum} </if>
+		  		  <if test="tocollegeId != null and tocollegeId != ''"> and a.tocollege_id = #{tocollegeId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_major a
+		 <include refid="MajorJoins"/>
+		 <where>  
+		  		  <if test="id != null and id != ''"> and a.id = #{id} </if>
+		  		  <if test="majorName != null and majorName != ''"> and a.major_name LIKE CONCAT('%',#{majorName},'%') </if>
+		  		  <if test="singleName != null and singleName != ''"> and a.single_name = #{singleName} </if>
+		  		  <if test="introduce != null and introduce != ''"> and a.introduce = #{introduce} </if>
+		  		  <if test="majorNum != null and majorNum != ''"> and a.major_num = #{majorNum} </if>
+		  		  <if test="tocollegeId != null and tocollegeId != ''"> and a.tocollege_id = #{tocollegeId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.yizhi.student.domain.MajorDO" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_major
+		(
+			`major_name`, 
+			`single_name`, 
+			`introduce`, 
+			`major_num`, 
+			`tocollege_id`
+		)
+		values
+		(
+			#{majorName}, 
+			#{singleName}, 
+			#{introduce}, 
+			#{majorNum}, 
+			#{tocollegeId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.yizhi.student.domain.MajorDO">
+		update sys_major 
+		<set>
+			<if test="majorName != null">`major_name` = #{majorName}, </if>
+			<if test="singleName != null">`single_name` = #{singleName}, </if>
+			<if test="introduce != null">`introduce` = #{introduce}, </if>
+			<if test="majorNum != null">`major_num` = #{majorNum}, </if>
+			<if test="tocollegeId != null">`tocollege_id` = #{tocollegeId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_major where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_major where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
